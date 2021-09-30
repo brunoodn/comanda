@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+{% block 'conteudo'%}
+<div class="container">
+    <br>
+    <div class="row">
+       <br>
+            {% for i in comanda %}
+            <div class="col-md  mb-3">
+                 <div class="card" style="width: 14rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Comanda: {{i.nome_cliente}}</h5>
+                        <h5  class="card-subtitle mb-2 text-muted">Mesa: {{i.numero_mesa}} </h5>
+                        <h5  class="card-subtitle mb-2 text-muted">Total: R$  </h5>
+                        <br>
+                        <a href="{% url 'ver_pedido' i.id %}" class="btn btn-info">Acessar</a>
+                        <a onclick="mostrar_form(3)" href=#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"">Adicionar</a>
+                     </div>
+                </div>
+            </div>
+            {% endfor %}
+
+
+
+    </div>
+</div>
+
+{% endblock %}

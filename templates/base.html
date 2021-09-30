@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    {% block 'head' %} {% endblock %}
+    <title>{% block 'title' %}Home{% endblock %}</title>
+  </head>
+  <body>
+  <nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">Comanda</a>
+<!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Cadastrar
+    </button>
+    <button class="btn btn-danger">
+      Sair
+    </button>
+  </div>
+</nav>
+    {% block 'conteudo' %}{% endblock %}
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cadastros</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <button onclick="mostrar_form(1)" style="margin-left: 10px;" class="btn btn-success" >Itens</button>
+        <button onclick="mostrar_form(2)" style="margin-left: 10px;" class="btn btn-warning" >Comandas</button>
+        <button onclick="mostrar_form(3)" style="margin-left: 10px;" class="btn btn-danger">Pedidos</button>
+        <hr>
+        <div id="item" style="display:none;">
+          <form method="post" action="{% url 'cadastrar_item' %}">
+            {% csrf_token %}
+            <table>
+              {{ form_item.as_table }}
+            </table>
+            <input type="submit" class="btn btn-primary" value="Cadastrar">
+          </form>
+        </div>
+        <div id="comanda" style="display:none;">
+          <form method="post" action="{% url 'cadastrar_comanda' %}">
+            {% csrf_token %}
+            <table>
+              {{ form_comanda.as_table }}
+            </table>
+            <input type="submit" class="btn btn-primary" value="Cadastrar">
+          </form>
+        </div>
+        <div id="pedido" style="display:none;">
+          <form method="post" action="{% url 'cadastrar_pedido' %}">
+            {% csrf_token %}
+            <table>
+              {{ form_pedido.as_table }}
+            </table>
+            <input type="submit" class="btn btn-primary" value="Cadastrar">
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+  <script>
+    function mostrar_form(v1){
+      item = document.getElementById('item')
+      comanda = document.getElementById('comanda')
+      pedido = document.getElementById('pedido')
+
+      if (v1 == 1){
+        item.style.display = 'block'
+
+        comanda.style.display = 'none'
+        pedido.style.display = 'none'
+      }else if (v1 == 2){
+        comanda.style.display = 'block'
+
+        item.style.display = 'none'
+        pedido.style.display = 'none'
+      }else if (v1 == 3){
+        pedido.style.display = 'block'
+
+        item.style.display = 'none'
+        comanda.style.display = 'none'
+      }
+    }
+
+  </script>
+  </body>
+</html>
